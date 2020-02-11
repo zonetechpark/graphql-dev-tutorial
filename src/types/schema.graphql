@@ -8,6 +8,13 @@ type User {
   id: ID!
   name: String!
   age: Int
+  tweets: [Tweet!]!
+}
+
+type Tweet {
+  id: ID!
+  body: String!
+  author: User!
 }
 
 type Mutation {

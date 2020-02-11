@@ -1,0 +1,7 @@
+type Tweet {
+  id: ID! @id
+  body: String!
+  author: User!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
