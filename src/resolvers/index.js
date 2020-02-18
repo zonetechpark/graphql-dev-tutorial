@@ -1,10 +1,13 @@
+const Query = require("./Query");
+const Mutation = require("./Mutation");
+const User = require("./Relation/User");
+const Tweet = require("./Relation/Tweet");
+
 const resolvers = {
-  Query: {
-    info: () => `Hello World`,
-    users: (parent, args, context, info) => {
-      return context.prisma.users();
-    }
-  }
+  Query,
+  Mutation,
+  User,
+  Tweet
 };
 
 module.exports = resolvers;

@@ -69,7 +69,7 @@ type Subscription {
 type Tweet {
   id: ID!
   body: String!
-  author: User!
+  author: User
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -83,7 +83,7 @@ type TweetConnection {
 input TweetCreateInput {
   id: ID
   body: String!
-  author: UserCreateOneWithoutTweetsInput!
+  author: UserCreateOneWithoutTweetsInput
 }
 
 input TweetCreateManyWithoutAuthorInput {
@@ -189,7 +189,7 @@ input TweetSubscriptionWhereInput {
 
 input TweetUpdateInput {
   body: String
-  author: UserUpdateOneRequiredWithoutTweetsInput
+  author: UserUpdateOneWithoutTweetsInput
 }
 
 input TweetUpdateManyDataInput {
@@ -291,6 +291,8 @@ type User {
   id: ID!
   name: String!
   age: Int
+  email: String
+  password: String
   createdAt: DateTime!
   updatedAt: DateTime!
   tweets(where: TweetWhereInput, orderBy: TweetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tweet!]
@@ -306,6 +308,8 @@ input UserCreateInput {
   id: ID
   name: String!
   age: Int
+  email: String
+  password: String
   tweets: TweetCreateManyWithoutAuthorInput
 }
 
@@ -318,6 +322,8 @@ input UserCreateWithoutTweetsInput {
   id: ID
   name: String!
   age: Int
+  email: String
+  password: String
 }
 
 type UserEdge {
@@ -332,6 +338,10 @@ enum UserOrderByInput {
   name_DESC
   age_ASC
   age_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -342,6 +352,8 @@ type UserPreviousValues {
   id: ID!
   name: String!
   age: Int
+  email: String
+  password: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -367,24 +379,32 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   name: String
   age: Int
+  email: String
+  password: String
   tweets: TweetUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   age: Int
+  email: String
+  password: String
 }
 
-input UserUpdateOneRequiredWithoutTweetsInput {
+input UserUpdateOneWithoutTweetsInput {
   create: UserCreateWithoutTweetsInput
   update: UserUpdateWithoutTweetsDataInput
   upsert: UserUpsertWithoutTweetsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
 input UserUpdateWithoutTweetsDataInput {
   name: String
   age: Int
+  email: String
+  password: String
 }
 
 input UserUpsertWithoutTweetsInput {
@@ -429,6 +449,34 @@ input UserWhereInput {
   age_lte: Int
   age_gt: Int
   age_gte: Int
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -455,6 +503,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }
 `
       }

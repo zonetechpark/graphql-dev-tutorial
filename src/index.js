@@ -1,6 +1,6 @@
 const { GraphQLServer } = require("graphql-yoga");
 const { prisma } = require("./generated/prisma-client");
-// const typeDefs = require("./types/schema");
+const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
 
 async function main() {
@@ -15,9 +15,14 @@ async function main() {
 }
 
 const server = new GraphQLServer({
-  typeDefs: "./src/types/schema.graphql",
+  typeDefs,
   resolvers,
-  context: { prisma }
+  context: request => {
+    return {
+      ...request,
+      prisma
+    };
+  }
 });
 
 // main().catch(err => console.error(err));

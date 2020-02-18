@@ -157,6 +157,10 @@ export type UserOrderByInput =
   | "name_DESC"
   | "age_ASC"
   | "age_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "password_ASC"
+  | "password_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -256,6 +260,34 @@ export interface UserWhereInput {
   age_lte?: Maybe<Int>;
   age_gt?: Maybe<Int>;
   age_gte?: Maybe<Int>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -282,12 +314,13 @@ export interface UserWhereInput {
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  email?: Maybe<String>;
 }>;
 
 export interface TweetCreateInput {
   id?: Maybe<ID_Input>;
   body: String;
-  author: UserCreateOneWithoutTweetsInput;
+  author?: Maybe<UserCreateOneWithoutTweetsInput>;
 }
 
 export interface UserCreateOneWithoutTweetsInput {
@@ -299,23 +332,29 @@ export interface UserCreateWithoutTweetsInput {
   id?: Maybe<ID_Input>;
   name: String;
   age?: Maybe<Int>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
 }
 
 export interface TweetUpdateInput {
   body?: Maybe<String>;
-  author?: Maybe<UserUpdateOneRequiredWithoutTweetsInput>;
+  author?: Maybe<UserUpdateOneWithoutTweetsInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutTweetsInput {
+export interface UserUpdateOneWithoutTweetsInput {
   create?: Maybe<UserCreateWithoutTweetsInput>;
   update?: Maybe<UserUpdateWithoutTweetsDataInput>;
   upsert?: Maybe<UserUpsertWithoutTweetsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserUpdateWithoutTweetsDataInput {
   name?: Maybe<String>;
   age?: Maybe<Int>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
 }
 
 export interface UserUpsertWithoutTweetsInput {
@@ -331,6 +370,8 @@ export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   age?: Maybe<Int>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
   tweets?: Maybe<TweetCreateManyWithoutAuthorInput>;
 }
 
@@ -349,6 +390,8 @@ export interface TweetCreateWithoutAuthorInput {
 export interface UserUpdateInput {
   name?: Maybe<String>;
   age?: Maybe<Int>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
   tweets?: Maybe<TweetUpdateManyWithoutAuthorInput>;
 }
 
@@ -451,6 +494,8 @@ export interface TweetUpdateManyDataInput {
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   age?: Maybe<Int>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
 }
 
 export interface TweetSubscriptionWhereInput {
@@ -518,6 +563,8 @@ export interface User {
   id: ID_Output;
   name: String;
   age?: Int;
+  email?: String;
+  password?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -526,6 +573,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   age: () => Promise<Int>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   tweets: <T = FragmentableArray<Tweet>>(args?: {
@@ -545,6 +594,8 @@ export interface UserSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   age: () => Promise<AsyncIterator<Int>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   tweets: <T = Promise<AsyncIterator<TweetSubscription>>>(args?: {
@@ -564,6 +615,8 @@ export interface UserNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   age: () => Promise<Int>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   tweets: <T = FragmentableArray<Tweet>>(args?: {
@@ -803,6 +856,8 @@ export interface UserPreviousValues {
   id: ID_Output;
   name: String;
   age?: Int;
+  email?: String;
+  password?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -813,6 +868,8 @@ export interface UserPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   age: () => Promise<Int>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -823,6 +880,8 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   age: () => Promise<AsyncIterator<Int>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
